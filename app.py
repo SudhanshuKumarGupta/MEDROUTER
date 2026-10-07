@@ -1,0 +1,675 @@
+from flask import Flask, render_template, request, session, redirect
+import sqlite3
+from werkzeug.security import generate_password_hash, check_password_hash
+app = Flask(__name__)
+app.secret_key = "medrouter-key"
+# =========================================================
+# DATABASE
+# =========================================================
+DATABASE = "medrouter.db"
+def get_db():
+    conn = sqlite3.connect(DATABASE)
+    conn.row_factory = sqlite3.Row
+    return conn
+
+def init_db():
+
+    conn = get_db()
+
+    # USERS TABLE
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            full_name TEXT NOT NULL,
+            email TEXT UNIQUE NOT NULL,
+            password TEXT NOT NULL
+        )
+    """)
+
+    # CHECK HISTORY TABLE
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS check_history (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            patient_name TEXT NOT NULL,
+            age INTEGER NOT NULL,
+            gender TEXT NOT NULL,
+            location TEXT NOT NULL,
+            symptoms TEXT NOT NULL,
+            specialist TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users(id)
+        )
+    """)
+
+    conn.commit()
+    conn.close()
+# =========================================================
+# SPECIALIST RULES
+# =========================================================
+
+RULES = {
+
+    "Neurologist": {
+        "headache",
+        "migraine",
+        "dizziness",
+        "fainting",
+        "memory_problem"
+    },
+
+    "General Physician": {
+        "fever",
+        "chills",
+        "fatigue",
+        "weakness",
+        "loss_of_appetite",
+        "dehydration",
+        "sleep_problem"
+    },
+
+    "Pulmonologist": {
+        "cough",
+        "cold",
+        "sore_throat",
+        "breathing_problem",
+        "nasal_congestion",
+        "allergy"
+    },
+
+    "Cardiologist": {
+        "chest_pain",
+        "palpitations"
+    },
+
+    "Gastroenterologist": {
+        "stomach_pain",
+        "nausea",
+        "vomiting",
+        "diarrhea",
+        "constipation",
+        "acidity",
+        "bloating"
+    },
+
+    "Orthopedic": {
+        "back_pain",
+        "neck_pain",
+        "joint_pain",
+        "muscle_pain",
+        "swelling"
+    },
+
+    "Ophthalmologist": {
+        "eye_pain",
+        "blurred_vision"
+    },
+
+    "ENT Specialist": {
+        "ear_pain",
+        "hearing_problem"
+    },
+
+    "Dentist": {
+        "toothache"
+    },
+
+    "Dermatologist": {
+        "skin_rash",
+        "itching",
+        "skin_problem",
+        "hair_loss"
+    },
+
+    "Urologist": {
+        "urination_problem",
+        "burning_urination",
+        "frequent_urination"
+    },
+
+    "Gynecologist": {
+        "menstrual_pain",
+        "irregular_periods"
+    }
+}
+# =========================================================
+# KEYWORDS
+# =========================================================
+KEYWORDS = {
+    "headache": "headache",
+    "migraine": "migraine",
+    "dizziness": "dizziness",
+    "dizzy": "dizziness",
+    "faint": "fainting",
+    "fainting": "fainting",
+    "memory": "memory_problem",
+    "memory problem": "memory_problem",
+
+    "fever": "fever",
+    "chills": "chills",
+    "fatigue": "fatigue",
+    "tiredness": "fatigue",
+    "weakness": "weakness",
+    "loss of appetite": "loss_of_appetite",
+    "dehydration": "dehydration",
+    "sleep problem": "sleep_problem",
+    "difficulty sleeping": "sleep_problem",
+
+    "cough": "cough",
+    "cold": "cold",
+    "sore throat": "sore_throat",
+    "breathing problem": "breathing_problem",
+    "breathing difficulty": "breathing_problem",
+    "difficulty breathing": "breathing_problem",
+    "nasal congestion": "nasal_congestion",
+    "blocked nose": "nasal_congestion",
+    "allergy": "allergy",
+
+    "chest pain": "chest_pain",
+    "chest discomfort": "chest_pain",
+    "palpitation": "palpitations",
+    "palpitations": "palpitations",
+
+    "stomach pain": "stomach_pain",
+    "stomach ache": "stomach_pain",
+    "abdominal pain": "stomach_pain",
+    "nausea": "nausea",
+    "vomiting": "vomiting",
+    "diarrhea": "diarrhea",
+    "diarrhoea": "diarrhea",
+    "constipation": "constipation",
+    "acidity": "acidity",
+    "heartburn": "acidity",
+    "bloating": "bloating",
+
+    "back pain": "back_pain",
+    "neck pain": "neck_pain",
+    "joint pain": "joint_pain",
+    "muscle pain": "muscle_pain",
+    "swelling": "swelling",
+
+    "eye pain": "eye_pain",
+    "blurred vision": "blurred_vision",
+    "blurry vision": "blurred_vision",
+
+    "ear pain": "ear_pain",
+    "hearing problem": "hearing_problem",
+    "hearing difficulty": "hearing_problem",
+
+    "toothache": "toothache",
+    "tooth pain": "toothache",
+
+    "skin rash": "skin_rash",
+    "rash": "skin_rash",
+    "itching": "itching",
+    "skin problem": "skin_problem",
+    "hair loss": "hair_loss",
+
+    "urination problem": "urination_problem",
+    "burning urination": "burning_urination",
+    "burning while urinating": "burning_urination",
+    "frequent urination": "frequent_urination",
+
+    "menstrual pain": "menstrual_pain",
+    "period pain": "menstrual_pain",
+    "irregular periods": "irregular_periods"
+}
+
+
+# =========================================================
+# LOGIN
+# =========================================================
+
+@app.route("/", methods=["GET", "POST"])
+def home():
+
+    if request.method == "GET":
+        return render_template("login.html")
+
+    email = request.form.get("email", "").strip().lower()
+    password = request.form.get("password", "")
+
+    if not email or not password:
+
+        return render_template(
+            "login.html",
+            error="Please enter your email and password."
+        )
+
+    conn = get_db()
+
+    user = conn.execute(
+        "SELECT * FROM users WHERE email = ?",
+        (email,)
+    ).fetchone()
+
+    conn.close()
+
+    if user is None:
+
+        return render_template(
+            "login.html",
+            error="No account found with this email. Please create an account first."
+        )
+
+    if not check_password_hash(user["password"], password):
+
+        return render_template(
+            "login.html",
+            error="Incorrect password. Please try again."
+        )
+
+    # Store logged-in user information
+    session["user_id"] = user["id"]
+    session["user_name"] = user["full_name"]
+    session["user_email"] = user["email"]
+
+    # Redirect user to Dashboard after successful login
+    return redirect("/dashboard")
+
+
+# =========================================================
+# DASHBOARD
+# =========================================================
+
+@app.route("/dashboard")
+def dashboard():
+
+    # User must login first
+    if "user_id" not in session:
+        return redirect("/")
+
+    return render_template(
+        "dashboard.html",
+        user_name=session.get("user_name", "User")
+    )
+
+
+# =========================================================
+# REGISTER
+# =========================================================
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+
+    if request.method == "GET":
+        return render_template("register.html")
+
+    full_name = request.form.get("full_name", "").strip()
+    email = request.form.get("email", "").strip().lower()
+    password = request.form.get("password", "")
+    confirm_password = request.form.get("confirm_password", "")
+
+    # Empty field validation
+    if not full_name or not email or not password or not confirm_password:
+
+        return render_template(
+            "register.html",
+            error="Please fill in all fields."
+        )
+
+    # Password confirmation
+    if password != confirm_password:
+
+        return render_template(
+            "register.html",
+            error="Passwords do not match."
+        )
+
+    # Basic password length validation
+    if len(password) < 6:
+
+        return render_template(
+            "register.html",
+            error="Password must contain at least 6 characters."
+        )
+
+    conn = get_db()
+
+    # Check whether email already exists
+    existing_user = conn.execute(
+        "SELECT id FROM users WHERE email = ?",
+        (email,)
+    ).fetchone()
+
+    if existing_user:
+
+        conn.close()
+
+        return render_template(
+            "register.html",
+            error="An account with this email already exists."
+        )
+
+    # Hash password before storing it
+    hashed_password = generate_password_hash(password)
+
+    conn.execute(
+        """
+        INSERT INTO users (full_name, email, password)
+        VALUES (?, ?, ?)
+        """,
+        (full_name, email, hashed_password)
+    )
+
+    conn.commit()
+    conn.close()
+
+    return render_template(
+        "login.html",
+        success="Account created successfully. Please login to continue."
+    )
+
+
+# =========================================================
+# PATIENT DETAILS
+# =========================================================
+
+@app.route("/patient", methods=["GET", "POST"])
+def patient():
+
+    # User must login first
+    if "user_id" not in session:
+        return redirect("/")
+
+    if request.method == "GET":
+
+        return render_template(
+            "patient.html",
+            account_name=session.get("user_name", "")
+        )
+
+    data = {
+
+        "full_name": request.form.get(
+            "full_name",
+            ""
+        ).strip(),
+
+        "age": request.form.get(
+            "age",
+            ""
+        ).strip(),
+
+        "gender": request.form.get(
+            "gender",
+            ""
+        ).strip(),
+
+        "location": request.form.get(
+            "location",
+            ""
+        ).strip()
+    }
+
+    # Check empty fields
+    if not all(data.values()):
+
+        return render_template(
+            "patient.html",
+            account_name=session.get("user_name", ""),
+            error="Please fill in all patient details."
+        )
+
+    # Check age format
+    try:
+
+        age = int(data["age"])
+
+    except ValueError:
+
+        return render_template(
+            "patient.html",
+            account_name=session.get("user_name", ""),
+            error="Please enter a valid age."
+        )
+
+    # Check age range
+    if age < 1 or age > 120:
+
+        return render_template(
+            "patient.html",
+            account_name=session.get("user_name", ""),
+            error="Please enter a valid age."
+        )
+
+    # Store patient details in session
+    session["patient"] = data
+
+    return render_template("symptoms.html")
+
+
+# =========================================================
+# SYMPTOMS PAGE
+# =========================================================
+
+@app.route("/symptoms")
+def symptoms():
+
+    # User must login first
+    if "user_id" not in session:
+        return redirect("/")
+
+    return render_template("symptoms.html")
+
+
+# =========================================================
+# SYMPTOM CHECKING + SPECIALIST ROUTING
+# =========================================================
+
+@app.route("/check", methods=["POST"])
+def check():
+
+    # User must login first
+    if "user_id" not in session:
+        return redirect("/")
+
+    symptoms = set(
+        request.form.getlist("symptoms")
+    )
+
+    manual = request.form.get(
+        "manual_symptoms",
+        ""
+    ).lower().strip()
+
+    # Require at least one symptom or manual description
+    if not symptoms and not manual:
+
+        return render_template(
+            "symptoms.html",
+            error=(
+                "Please select at least one symptom "
+                "or describe your symptoms before continuing."
+            )
+        )
+
+    # =====================================================
+    # PROCESS MANUALLY ENTERED SYMPTOMS
+    # =====================================================
+
+    for word, symptom in KEYWORDS.items():
+
+        if word in manual:
+
+            symptoms.add(symptom)
+
+    # =====================================================
+    # CALCULATE SPECIALIST SCORES
+    # =====================================================
+
+    scores = {
+
+        specialist: len(
+            symptoms & rules
+        )
+
+        for specialist, rules in RULES.items()
+    }
+
+    best_score = max(
+        scores.values()
+    )
+
+    # Specialists having the highest score
+    top = [
+
+        specialist
+
+        for specialist, score in scores.items()
+
+        if score == best_score
+    ]
+
+    # =====================================================
+    # FIND MATCHING SYMPTOMS
+    # =====================================================
+
+    matches = {
+
+        specialist: list(
+            symptoms & RULES[specialist]
+        )
+
+        for specialist in top
+    }
+
+    # =====================================================
+    # DECIDE FINAL SPECIALIST
+    # =====================================================
+    if best_score == 0:
+        specialist = "General Physician"
+        multiple = []
+    elif len(top) == 1:
+        specialist = top[0]
+        multiple = []
+    else:
+        specialist = "Multiple Relevant Categories"
+        multiple = top
+        
+    # =====================================================
+    # SAVE CHECK RESULT TO DATABASE
+    # =====================================================
+
+    patient_data = session.get("patient", {})
+
+    symptoms_text = ", ".join(
+        sorted(symptoms)
+    )
+
+    conn = get_db()
+
+    conn.execute(
+        """
+        INSERT INTO check_history
+        (
+            user_id,
+            patient_name,
+            age,
+            gender,
+            location,
+            symptoms,
+            specialist
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+        """,
+        (
+            session["user_id"],
+            patient_data.get("full_name", ""),
+            int(patient_data.get("age", 0)),
+            patient_data.get("gender", ""),
+            patient_data.get("location", ""),
+            symptoms_text,
+            specialist
+        )
+    )
+
+    conn.commit()
+    conn.close()
+    # =====================================================
+    # SHOW RESULT
+    # =====================================================
+    return render_template(
+        "result.html",
+        specialist=specialist,
+        multiple_specialists=multiple,
+        specialist_matches=matches,
+        selected_symptoms=list(symptoms),
+        manual_symptoms=manual,
+        patient=session.get(
+            "patient",
+            {}
+        ),
+        matched_symptoms=[
+            symptom
+            for specialist in top
+            for symptom in (
+                symptoms & RULES[specialist]
+            )
+        ]
+    )
+# =========================================================
+# ADMIN DASHBOARD
+# =========================================================
+
+@app.route("/admin")
+def admin():
+
+    # User must login first
+    if "user_id" not in session:
+        return redirect("/")
+
+    # Only the owner/admin account can access this page
+    if session.get("user_id") != 1:
+        return redirect("/dashboard")
+
+    conn = get_db()
+
+    # Get all check records
+    records = conn.execute(
+        """
+        SELECT *
+        FROM check_history
+        ORDER BY id DESC
+        """
+    ).fetchall()
+
+    # Total number of checks
+    total_checks = conn.execute(
+        """
+        SELECT COUNT(*) 
+        FROM check_history
+        """
+    ).fetchone()[0]
+
+    # Count checks for each specialist
+    specialist_counts = conn.execute(
+        """
+        SELECT specialist, COUNT(*) AS count
+        FROM check_history
+        GROUP BY specialist
+        ORDER BY count DESC
+        """
+    ).fetchall()
+
+    conn.close()
+
+    return render_template(
+        "admin.html",
+        records=records,
+        total_checks=total_checks,
+        specialist_counts=specialist_counts
+    )
+# =========================================================
+# LOGOUT
+# =========================================================
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect("/")
+# =========================================================
+# START APPLICATION
+# =========================================================
+if __name__ == "__main__":
+    init_db()
+    app.run(debug=True)

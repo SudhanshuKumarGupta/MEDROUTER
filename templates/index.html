@@ -1,0 +1,288 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEDROUTER</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="brand-icon">
+                ✚
+            </div>
+            <div>
+                <h1>MEDROUTER</h1>
+                <p class="subtitle">
+                    A Symptom Checker & Specialist Routing System
+                </p>
+            </div>
+        </div>
+        <!-- Introduction -->
+        <div class="intro-box">
+            <strong>Smart Symptom Guidance</strong>
+            <p>
+                Enter your basic details and symptoms to get
+                preliminary specialist guidance.
+            </p>
+        </div>
+        <!-- Form -->
+        <form>
+            <!-- Patient Information -->
+            <div class="section-title">
+                Patient Information
+            </div>
+            <label>Name</label>
+            <input
+                type="text"
+                name="name"
+                placeholder="Enter your name"
+            >
+            <label>Age</label>
+            <input
+                type="number"
+                name="age"
+                placeholder="Enter your age"
+            >
+            <label>Gender</label>
+            <select name="gender">
+                <option value="">
+                    Select Gender
+                </option>
+                <option value="Male">
+                    Male
+                </option>
+                <option value="Female">
+                    Female
+                </option>
+                <option value="Other">
+                    Other
+                </option>
+            </select>
+            <label>Location</label>
+            <input
+                type="text"
+                name="location"
+                placeholder="Enter your location"
+            >
+            <!-- Symptoms Section -->
+            <div class="section-title symptoms-title">
+                Select Your Symptoms
+            </div>
+            <div class="symptoms-box">
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="headache">
+                    <span>Headache</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="migraine">
+                    <span>Migraine</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="dizziness">
+                    <span>Dizziness</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="fainting">
+                    <span>Fainting</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="fever">
+                    <span>Fever</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="chills">
+                    <span>Chills</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="fatigue">
+                    <span>Fatigue / Tiredness</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="weakness">
+                    <span>Weakness</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="cough">
+                    <span>Cough</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="cold">
+                    <span>Cold / Runny Nose</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="sore_throat">
+                    <span>Sore Throat</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="breathing_problem">
+                    <span>Breathing Difficulty</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="chest_pain">
+                    <span>Chest Pain</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="palpitations">
+                    <span>Heart Palpitations</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="stomach_pain">
+                    <span>Stomach Pain</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="nausea">
+                    <span>Nausea</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="vomiting">
+                    <span>Vomiting</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="diarrhea">
+                    <span>Diarrhea</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="constipation">
+                    <span>Constipation</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="acidity">
+                    <span>Acidity / Heartburn</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="bloating">
+                    <span>Bloating</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="back_pain">
+                    <span>Back Pain</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="neck_pain">
+                    <span>Neck Pain</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="joint_pain">
+                    <span>Joint Pain</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="muscle_pain">
+                    <span>Muscle Pain</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="swelling">
+                    <span>Swelling</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="eye_pain">
+                    <span>Eye Pain</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="blurred_vision">
+                    <span>Blurred Vision</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="ear_pain">
+                    <span>Ear Pain</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="hearing_problem">
+                    <span>Hearing Problem</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="toothache">
+                    <span>Toothache</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="skin_rash">
+                    <span>Skin Rash</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="itching">
+                    <span>Itching</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="skin_problem">
+                    <span>Skin Problem</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="hair_loss">
+                    <span>Hair Loss</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="sleep_problem">
+                    <span>Sleep Problem</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="memory_problem">
+                    <span>Memory Problem</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="urination_problem">
+                    <span>Urination Problem</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="burning_urination">
+                    <span>Burning During Urination</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="frequent_urination">
+                    <span>Frequent Urination</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="menstrual_pain">
+                    <span>Menstrual Pain</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="irregular_periods">
+                    <span>Irregular Periods</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="allergy">
+                    <span>Allergy</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="nasal_congestion">
+                    <span>Nasal Congestion</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="loss_of_appetite">
+                    <span>Loss of Appetite</span>
+                </label>
+                <label class="symptom-option">
+                    <input type="checkbox" name="symptoms" value="dehydration">
+                    <span>Dehydration</span>
+                </label>
+            </div>
+            <!-- Manual Symptoms -->
+            <div class="manual-title">
+                Or describe your symptoms
+            </div>
+            <textarea
+                name="manual_symptoms"
+                rows="5"
+                placeholder="Example: I have headache and dizziness since morning..."
+            ></textarea>
+            <!-- Button -->
+            <button type="submit">
+                Check Symptoms →
+            </button>
+        </form>
+        <!-- Safety Note -->
+        <div class="safety-note">
+            <span>ⓘ</span>
+            <p>
+                <strong>Important:</strong>
+                MEDROUTER provides preliminary guidance only
+                and is not a medical diagnosis.
+            </p>
+        </div>
+        <!-- Footer -->
+        <div class="footer">
+            MEDROUTER • By- SUDHANSHU KUMAR GUPTA
+        </div>
+    </div>
+</body>
+</html>

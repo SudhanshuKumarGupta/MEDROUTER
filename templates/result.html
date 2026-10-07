@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEDROUTER - Guidance Result</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="result-page">
+    <div class="result-card">
+        <!-- BRAND -->
+        <div class="result-brand">
+            <div class="brand-icon">
+                ✚
+            </div>
+            <div>
+                <strong>MEDROUTER</strong>
+                <span>Smart Health Guidance</span>
+            </div>
+        </div>
+        <!-- STEP -->
+        <div class="result-step">
+            STEP 4 OF 4
+        </div>
+        <!-- HEADING -->
+        <h1>
+            Your Preliminary Guidance
+        </h1>
+        <p class="result-intro">
+            Based on the symptoms you provided, MEDROUTER has identified
+            a relevant specialist category.
+        </p>
+        <!-- ================================= -->
+        <!-- MULTIPLE SPECIALISTS -->
+        <!-- ================================= -->
+        {% if specialist == "Multiple Relevant Categories" %}
+        <div class="multiple-result-card">
+            <div class="multiple-result-header">
+                <div class="multiple-result-icon">
+                    ⚕
+                </div>
+                <div>
+                    <span class="multiple-result-label">
+                        MULTIPLE CATEGORIES MATCHED
+                    </span>
+                    <h2>
+                        More Than One Category Matches
+                    </h2>
+                    <p>
+                        Your symptoms match more than one specialist
+                        category. MEDROUTER cannot determine a single
+                        category from these symptoms alone.
+                    </p>
+                </div>
+            </div>
+            <div class="category-list">
+                {% for specialist_name in multiple_specialists %}
+                <div class="category-row">
+                    <div class="category-name">
+                        <span class="category-dot">•</span>
+                        {{ specialist_name }}
+                    </div>
+                    <div class="category-symptoms">
+                        {% for symptom in specialist_matches.get(specialist_name, []) %}
+                        <span class="category-symptom">
+                            {{ symptom.replace('_', ' ').title() }}
+                        </span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% else %}
+        <!-- ================================= -->
+        <!-- SINGLE SPECIALIST -->
+        <!-- ================================= -->
+        <div class="single-result-card">
+            <div class="specialist-result-top">
+                <div class="single-result-icon">
+                    🩺
+                </div>
+                <div class="specialist-result-content">
+                    <span class="single-result-label">
+                        SUGGESTED SPECIALIST
+                    </span>
+                    <h2>
+                        {{ specialist }}
+                    </h2>
+                    <p class="specialist-result-description">
+                        Based on the symptoms you selected, this specialist
+                        category has the strongest match.
+                    </p>
+                </div>
+            </div>
+            {% if matched_symptoms %}
+            <div class="result-match-box">
+                <div class="result-match-heading">
+                    <span class="match-check">
+                        ✓
+                    </span>
+                    <div>
+                        <strong>Matched Symptoms</strong>
+                        <span>
+                            Symptoms supporting this specialist category
+                        </span>
+                    </div>
+                </div>
+                <div class="matched-symptoms">
+                    {% for symptom in matched_symptoms %}
+                    <span class="matched-symptom">
+                        {{ symptom.replace('_', ' ').title() }}
+                    </span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+        <!-- ================================= -->
+        <!-- PATIENT INFORMATION -->
+        <!-- ================================= -->
+        <div class="patient-info-section">
+            <h3>
+                Patient Information
+            </h3>
+            <div class="patient-info-grid">
+                <div class="patient-info-item">
+                    <span>NAME</span>
+                    <strong>
+                        {{ patient.get('full_name', 'Not available') }}
+                    </strong>
+                </div>
+                <div class="patient-info-item">
+                    <span>AGE</span>
+                    <strong>
+                        {{ patient.get('age', 'Not available') }}
+                    </strong>
+                </div>
+                <div class="patient-info-item">
+                    <span>GENDER</span>
+                    <strong>
+                        {{ patient.get('gender', 'Not available')|title }}
+                    </strong>
+                </div>
+                <div class="patient-info-item">
+                    <span>LOCATION</span>
+                    <strong>
+                        {{ patient.get('location', 'Not available') }}
+                    </strong>
+                </div>
+            </div>
+        </div>
+        <!-- ================================= -->
+        <!-- SYMPTOMS -->
+        <!-- ================================= -->
+        <div class="symptoms-considered-section">
+            <h3>
+                Symptoms Considered
+            </h3>
+            {% if selected_symptoms %}
+            <div class="matched-symptoms">
+                {% for symptom in selected_symptoms %}
+                <span class="matched-symptom">
+                    {{ symptom.replace('_', ' ').title() }}
+                </span>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="no-symptoms">
+                No predefined symptoms were selected.
+            </p>
+            {% endif %}
+        </div>
+        <!-- ================================= -->
+        <!-- MANUAL DESCRIPTION -->
+        <!-- ================================= -->
+        {% if manual_symptoms %}
+        <div class="manual-description-section">
+            <h3>
+                Your Description
+            </h3>
+            <p>
+                {{ manual_symptoms }}
+            </p>
+        </div>
+        {% endif %}
+        <!-- ================================= -->
+        <!-- WHY THIS SPECIALIST -->
+        <!-- ================================= -->
+        <div class="routing-match-section">
+            {% if specialist == "Multiple Relevant Categories" %}
+            <h3>
+                Why these categories?
+            </h3>
+            <p>
+                Each category was matched based on the symptoms associated
+                with its predefined specialist rules.
+            </p>
+            <div class="category-explanation-list">
+                {% for specialist_name in multiple_specialists %}
+                <div class="category-explanation-row">
+                    <strong>
+                        {{ specialist_name }}
+                    </strong>
+                    <span class="arrow">
+                        →
+                    </span>
+                    <div class="explanation-symptoms">
+                        {% for symptom in specialist_matches.get(specialist_name, []) %}
+                        <span class="matched-symptom">
+                            {{ symptom.replace('_', ' ').title() }}
+                        </span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <h3>
+                Why this specialist?
+            </h3>
+            <p>
+                The following symptoms matched the selected
+                specialist category:
+            </p>
+            <div class="matched-symptoms">
+                {% for symptom in matched_symptoms %}
+                <span class="matched-symptom">
+                    {{ symptom.replace('_', ' ').title() }}
+                </span>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        <!-- ================================= -->
+        <!-- HOW MEDROUTER DECIDED -->
+        <!-- ================================= -->
+        <div class="decision-section">
+            <h3>
+                How MEDROUTER decided
+            </h3>
+            <p>
+                The system compared your symptoms with predefined
+                specialist rules and selected the category with the
+                strongest match.
+            </p>
+        </div>
+        <!-- ================================= -->
+        <!-- SAFETY -->
+        <!-- ================================= -->
+        <div class="safety-box">
+            <strong>
+                Important
+            </strong>
+            <p>
+                MEDROUTER provides preliminary guidance only.
+                It does not diagnose medical conditions.
+                Please consult a qualified healthcare professional
+                for proper evaluation and treatment.
+            </p>
+        </div>
+        <!-- ================================= -->
+        <!-- BUTTON -->
+        <!-- ================================= -->
+        <div class="result-actions">
+            <a href="/symptoms" class="back-button">
+                ← Check Symptoms Again
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

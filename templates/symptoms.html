@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MEDROUTER | Symptoms</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="auth-container">
+
+        <!-- LEFT SIDE -->
+        <div class="auth-info">
+
+            <div class="brand">
+                <div class="brand-logo">✚</div>
+
+                <div>
+                    <h1>MEDROUTER</h1>
+                    <p>Symptom Guidance Platform</p>
+                </div>
+            </div>
+
+
+            <div class="health-visual">
+
+                <div class="health-circle">
+                    <span>♥</span>
+                </div>
+
+                <div class="health-text">
+
+                    <strong>Smart Symptom Analysis</strong>
+
+                    <p>
+                        Select the symptoms you are
+                        currently experiencing.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="welcome-content">
+
+                <span class="welcome-tag">
+                    STEP 3 OF 4
+                </span>
+
+                <h2>
+                    Tell us how
+                    <span>you feel.</span>
+                </h2>
+
+                <p>
+                    Select the symptoms that best describe
+                    your current condition.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT SIDE -->
+        <div class="auth-form">
+
+            <div class="form-header">
+
+                <h2>Select Symptoms</h2>
+
+                <p>
+                    Choose one or more symptoms
+                </p>
+
+            </div>
+
+
+            <form method="POST" action="/check">
+            <form method="POST" action="/check">
+
+             {% if error %}
+             <div class="error-message">
+              ⚠️ {{ error }}
+           </div>
+           {% endif %}
+
+    <!-- baaki tumhara existing symptom form -->
+                <div class="symptom-grid">
+
+
+                    <!-- Neurological -->
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="headache">
+                        <span>🤕</span>
+                        <strong>Headache</strong>
+                    </label>
+
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="migraine">
+                        <span>🧠</span>
+                        <strong>Migraine</strong>
+                    </label>
+
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="dizziness">
+                        <span>😵</span>
+                        <strong>Dizziness</strong>
+                    </label>
+
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="fainting">
+                        <span>🫨</span>
+                        <strong>Fainting</strong>
+                    </label>
+
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="memory_problem">
+                        <span>🧠</span>
+                        <strong>Memory Problem</strong>
+                    </label>
+
+
+                    <!-- General -->
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="fever">
+                        <span>🌡️</span>
+                        <strong>Fever</strong>
+                    </label>
+
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="chills">
+                        <span>🥶</span>
+                        <strong>Chills</strong>
+                    </label>
+
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="fatigue">
+                        <span>😴</span>
+                        <strong>Fatigue / Tiredness</strong>
+                    </label>
+
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="weakness">
+                        <span>💪</span>
+                        <strong>Weakness</strong>
+                    </label>
+
+
+                    <!-- Respiratory -->
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="cough">
+                        <span>😷</span>
+                        <strong>Cough</strong>
+                    </label>
+
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="cold">
+                        <span>🤧</span>
+                        <strong>Cold / Runny Nose</strong>
+                    </label>
+
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="sore_throat">
+                        <span>🗣️</span>
+                        <strong>Sore Throat</strong>
+                    </label>
+
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="breathing_problem">
+                        <span>🫁</span>
+                        <strong>Breathing Difficulty</strong>
+                    </label>
+
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="nasal_congestion">
+                        <span>👃</span>
+                        <strong>Nasal Congestion</strong>
+                    </label>
+
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="allergy">
+                        <span>🤧</span>
+                        <strong>Allergy</strong>
+                    </label>
+
+
+                    <!-- Heart -->
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="chest_pain">
+                        <span>🫀</span>
+                        <strong>Chest Pain</strong>
+                    </label>
+
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="palpitations">
+                        <span>❤️</span>
+                        <strong>Heart Palpitations</strong>
+                    </label>
+
+
+                    <!-- Digestive -->
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="stomach_pain">
+                        <span>🤢</span>
+                        <strong>Stomach Pain</strong>
+                    </label>
+
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="nausea">
+                        <span>🤮</span>
+                        <strong>Nausea</strong>
+                    </label>
+
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="vomiting">
+                        <span>🤮</span>
+                        <strong>Vomiting</strong>
+                    </label>
+
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="diarrhea">
+                        <span>🚽</span>
+                        <strong>Diarrhea</strong>
+                    </label>
+
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="constipation">
+                        <span>🍽️</span>
+                        <strong>Constipation</strong>
+                    </label>
+
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="acidity">
+                        <span>🔥</span>
+                        <strong>Acidity / Heartburn</strong>
+                    </label>
+
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="bloating">
+                        <span>🫃</span>
+                        <strong>Bloating</strong>
+                    </label>
+
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="loss_of_appetite">
+                        <span>🍽️</span>
+                        <strong>Loss of Appetite</strong>
+                    </label>
+
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="dehydration">
+                        <span>💧</span>
+                        <strong>Dehydration</strong>
+                    </label>
+
+
+                    <!-- Musculoskeletal -->
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="back_pain">
+                        <span>🩻</span>
+                        <strong>Back Pain</strong>
+                    </label>
+
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="neck_pain">
+                        <span>🦴</span>
+                        <strong>Neck Pain</strong>
+                    </label>
+
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="joint_pain">
+                        <span>🦴</span>
+                        <strong>Joint Pain</strong>
+                    </label>
+
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="muscle_pain">
+                        <span>💪</span>
+                        <strong>Muscle Pain</strong>
+                    </label>
+
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="swelling">
+                        <span>🦵</span>
+                        <strong>Swelling</strong>
+                    </label>
+
+
+                    <!-- Eyes / Ears -->
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="eye_pain">
+                        <span>👁️</span>
+                        <strong>Eye Pain</strong>
+                    </label>
+
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="blurred_vision">
+                        <span>👓</span>
+                        <strong>Blurred Vision</strong>
+                    </label>
+
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="ear_pain">
+                        <span>👂</span>
+                        <strong>Ear Pain</strong>
+                    </label>
+
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="hearing_problem">
+                        <span>👂</span>
+                        <strong>Hearing Problem</strong>
+                    </label>
+
+
+                    <!-- Dental / Skin -->
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="toothache">
+                        <span>🦷</span>
+                        <strong>Toothache</strong>
+                    </label>
+
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="skin_rash">
+                        <span>🔴</span>
+                        <strong>Skin Rash</strong>
+                    </label>
+
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="itching">
+                        <span>🖐️</span>
+                        <strong>Itching</strong>
+                    </label>
+
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="skin_problem">
+                        <span>🧴</span>
+                        <strong>Skin Problem</strong>
+                    </label>
+
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="hair_loss">
+                        <span>💇</span>
+                        <strong>Hair Loss</strong>
+                    </label>
+
+
+                    <!-- Sleep / General -->
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="sleep_problem">
+                        <span>😴</span>
+                        <strong>Sleep Problem</strong>
+                    </label>
+
+
+                    <!-- Urinary -->
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="urination_problem">
+                        <span>🚻</span>
+                        <strong>Urination Problem</strong>
+                    </label>
+
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="burning_urination">
+                        <span>🔥</span>
+                        <strong>Burning During Urination</strong>
+                    </label>
+
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="frequent_urination">
+                        <span>🚻</span>
+                        <strong>Frequent Urination</strong>
+                    </label>
+
+
+                    <!-- Women's Health -->
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="menstrual_pain">
+                        <span>🩷</span>
+                        <strong>Menstrual Pain</strong>
+                    </label>
+
+                    <label class="symptom-card">
+                        <input type="checkbox" name="symptoms" value="irregular_periods">
+                        <span>📅</span>
+                        <strong>Irregular Periods</strong>
+                    </label>
+
+                </div>
+
+
+                <!-- Manual Symptoms -->
+
+                <label class="manual-label">
+                    Or describe your symptoms
+                </label>
+
+                <textarea
+                    name="manual_symptoms"
+                    rows="4"
+                    placeholder="Example: I have headache and dizziness since morning..."
+                ></textarea>
+
+
+                <button type="submit">
+                    Continue to Guidance →
+                </button>
+
+            </form>
+
+
+            <!-- Safety Note -->
+
+            <div class="safety-note">
+
+                <span>ⓘ</span>
+
+                <p>
+                    <strong>Important:</strong>
+                    MEDROUTER provides preliminary guidance only
+                    and is not a medical diagnosis.
+                </p>
+
+            </div>
+
+
+            <div class="footer">
+                MEDROUTER • By- SUDHANSHU KUMAR GUPTA
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

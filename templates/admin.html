@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MEDROUTER | Admin</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="admin-page">
+
+    <header class="admin-header">
+
+        <div class="admin-brand">
+
+            <div class="admin-logo">
+                ✚
+            </div>
+
+            <div>
+                <h1>MEDROUTER</h1>
+                <span>Admin Dashboard</span>
+            </div>
+
+        </div>
+
+        <a href="/logout" class="admin-logout">
+            Logout
+        </a>
+
+    </header>
+
+
+    <main class="admin-main">
+
+        <div class="admin-title">
+
+            <span>ADMIN PANEL</span>
+
+            <h2>Symptom Check Records</h2>
+
+            <p>
+                View the symptom checks submitted through MEDROUTER.
+            </p>
+
+        </div>
+
+<!-- STATISTICS -->
+
+<div class="admin-stats">
+
+    <div class="admin-stat-card">
+
+        <div class="admin-stat-icon">
+            📊
+        </div>
+
+        <div>
+            <span>Total Checks</span>
+
+            <strong>
+                {{ total_checks }}
+            </strong>
+        </div>
+
+    </div>
+
+
+    {% for item in specialist_counts %}
+
+    <div class="admin-stat-card">
+
+        <div class="admin-stat-icon">
+            🩺
+        </div>
+
+        <div>
+            <span>{{ item["specialist"] }}</span>
+
+            <strong>
+                {{ item["count"] }}
+            </strong>
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+        <div class="admin-table-card">
+
+            <div class="admin-table-wrapper">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Patient</th>
+                            <th>Age</th>
+                            <th>Gender</th>
+                            <th>Location</th>
+                            <th>Symptoms</th>
+                            <th>Specialist</th>
+                            <th>Date & Time</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for record in records %}
+
+                        <tr>
+
+                            <td>{{ record["id"] }}</td>
+
+                            <td>
+                                {{ record["patient_name"] }}
+                            </td>
+
+                            <td>
+                                {{ record["age"] }}
+                            </td>
+
+                            <td>
+                                {{ record["gender"] }}
+                            </td>
+
+                            <td>
+                                {{ record["location"] }}
+                            </td>
+
+                            <td>
+                                {{ record["symptoms"] }}
+                            </td>
+
+                            <td>
+                                <strong>
+                                    {{ record["specialist"] }}
+                                </strong>
+                            </td>
+
+                            <td>
+                                {{ record["created_at"] }}
+                            </td>
+
+                        </tr>
+
+                        {% else %}
+
+                        <tr>
+
+                            <td colspan="8">
+                                No symptom check records found.
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <div class="admin-note">
+
+            <strong>ⓘ Privacy Notice</strong>
+
+            <p>
+                This page is intended for authorized project administration only.
+                Patient information should not be shared publicly.
+            </p>
+
+        </div>
+
+    </main>
+
+
+    <footer class="admin-footer">
+
+        MEDROUTER • Admin Panel
+
+    </footer>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MEDROUTER | Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="dashboard-page">
+
+    <!-- HEADER -->
+    <header class="dashboard-header">
+
+        <div class="dashboard-brand">
+
+            <div class="dashboard-logo">
+                ✚
+            </div>
+
+            <div>
+                <h1>MEDROUTER</h1>
+                <span>Smart Health Guidance</span>
+            </div>
+
+        </div>
+
+
+        <div class="dashboard-user">
+
+            <span>
+                Welcome, {{ user_name }}
+            </span>
+
+            <a href="/logout">
+                Logout
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="dashboard-main">
+
+        <div class="dashboard-welcome">
+
+            <span class="dashboard-tag">
+                PERSONAL HEALTH DASHBOARD
+            </span>
+
+            <h2>
+                Welcome to MEDROUTER,
+                <span>{{ user_name }}</span> 👋
+            </h2>
+
+            <p>
+                Get preliminary specialist guidance based on
+                the symptoms you provide.
+            </p>
+
+        </div>
+
+
+        <!-- START CHECK CARD -->
+        <div class="dashboard-main-card">
+
+            <div class="dashboard-main-icon">
+                🩺
+            </div>
+
+            <div class="dashboard-main-content">
+
+                <span>
+                    SYMPTOM GUIDANCE
+                </span>
+
+                <h3>
+                    Check Your Symptoms
+                </h3>
+
+                <p>
+                    Enter your basic information and symptoms.
+                    MEDROUTER will compare them with predefined
+                    specialist rules and provide preliminary
+                    guidance.
+                </p>
+
+                <a href="/patient" class="dashboard-primary-button">
+                    Start Symptom Check →
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- INFORMATION CARDS -->
+        <div class="dashboard-cards">
+
+
+            <div class="dashboard-card">
+
+                <div class="dashboard-card-icon">
+                    🔍
+                </div>
+
+                <h3>
+                    Symptom Analysis
+                </h3>
+
+                <p>
+                    Select symptoms or describe them in your
+                    own words.
+                </p>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <div class="dashboard-card-icon">
+                    🧠
+                </div>
+
+                <h3>
+                    Rule-Based Routing
+                </h3>
+
+                <p>
+                    Symptoms are matched with predefined
+                    specialist categories.
+                </p>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <div class="dashboard-card-icon">
+                    📋
+                </div>
+
+                <h3>
+                    Preliminary Guidance
+                </h3>
+
+                <p>
+                    View the specialist category identified
+                    from your symptoms.
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- HOW IT WORKS -->
+        <div class="dashboard-how">
+
+            <h3>
+                How MEDROUTER Works
+            </h3>
+
+            <div class="dashboard-steps">
+
+                <div class="dashboard-step">
+
+                    <strong>01</strong>
+
+                    <span>
+                        Patient Details
+                    </span>
+
+                </div>
+
+
+                <div class="dashboard-arrow">
+                    →
+                </div>
+
+
+                <div class="dashboard-step">
+
+                    <strong>02</strong>
+
+                    <span>
+                        Symptoms
+                    </span>
+
+                </div>
+
+
+                <div class="dashboard-arrow">
+                    →
+                </div>
+
+
+                <div class="dashboard-step">
+
+                    <strong>03</strong>
+
+                    <span>
+                        Rule Matching
+                    </span>
+
+                </div>
+
+
+                <div class="dashboard-arrow">
+                    →
+                </div>
+
+
+                <div class="dashboard-step">
+
+                    <strong>04</strong>
+
+                    <span>
+                        Guidance
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- SAFETY NOTE -->
+        <div class="dashboard-safety">
+
+            <strong>
+                ⓘ Important
+            </strong>
+
+            <p>
+                MEDROUTER provides preliminary guidance only.
+                It does not diagnose medical conditions.
+                Please consult a qualified healthcare professional
+                for proper evaluation and treatment.
+            </p>
+
+        </div>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer class="dashboard-footer">
+
+        MEDROUTER • By- SUDHANSHU KUMAR GUPTA
+
+    </footer>
+
+</div>
+
+</body>
+
+</html>

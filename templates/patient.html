@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MEDROUTER | Patient Details</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+<div class="auth-container">
+
+
+    <!-- =========================================
+         LEFT SIDE
+         ========================================= -->
+
+    <div class="auth-info">
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                ✚
+            </div>
+
+            <div>
+
+                <h1>
+                    MEDROUTER
+                </h1>
+
+                <p>
+                    Symptom Guidance Platform
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- Health Visual -->
+
+        <div class="health-visual">
+
+            <div class="pulse-line"></div>
+
+            <div class="health-circle">
+
+                <span>
+                    ♥
+                </span>
+
+            </div>
+
+
+            <div class="health-text">
+
+                <strong>
+                    Smart Health Guidance
+                </strong>
+
+                <p>
+                    Your information helps MEDROUTER
+                    provide relevant preliminary guidance.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- Welcome -->
+
+        <div class="welcome-content">
+
+            <span class="welcome-tag">
+                STEP 2 OF 4
+            </span>
+
+            <h2>
+
+                Tell us a little
+                <span>about you.</span>
+
+            </h2>
+
+            <p>
+
+                Enter your basic information before
+                starting the symptom check.
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================
+         RIGHT SIDE
+         ========================================= -->
+
+    <div class="auth-form">
+
+
+        <div class="form-header">
+
+            <h2>
+                Patient Details
+            </h2>
+
+            <p>
+                Please enter your basic information
+            </p>
+
+        </div>
+
+
+        <!-- Patient Form -->
+
+        <form action="/patient" method="POST">
+
+
+            <!-- Full Name -->
+
+            <label>
+                Full Name
+            </label>
+
+            <div class="input-box">
+
+                <span>
+                    👤
+                </span>
+
+                <input
+                    type="text"
+                    name="full_name"
+                    placeholder="Enter your full name"
+                    required>
+
+            </div>
+
+
+            <!-- Age -->
+
+            <label>
+                Age
+            </label>
+
+            <div class="input-box">
+
+                <span>
+                    🎂
+                </span>
+
+                <input
+                    type="number"
+                    name="age"
+                    placeholder="Enter your age"
+                    min="1"
+                    max="120"
+                    required>
+
+            </div>
+
+
+            <!-- Gender -->
+
+            <label>
+                Gender
+            </label>
+
+            <div class="input-box">
+
+                <span>
+                    ⚧
+                </span>
+
+                <select
+                    name="gender"
+                    required>
+
+                    <option value="">
+                        Select your gender
+                    </option>
+
+                    <option value="male">
+                        Male
+                    </option>
+
+                    <option value="female">
+                        Female
+                    </option>
+
+                    <option value="other">
+                        Other
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Location -->
+
+            <label>
+                Location
+            </label>
+
+            <div class="input-box">
+
+                <span>
+                    📍
+                </span>
+
+                <input
+                    type="text"
+                    name="location"
+                    placeholder="Enter your city/location"
+                    required>
+
+            </div>
+
+
+            <!-- Continue -->
+
+            <button type="submit">
+
+                Continue to Symptoms →
+
+            </button>
+
+
+            <!-- Footer -->
+
+            <div class="footer">
+
+                MEDROUTER • By- SUDHANSHU KUMAR GUPTA
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

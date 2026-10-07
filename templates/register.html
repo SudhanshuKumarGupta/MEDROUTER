@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MEDROUTER | Create Account</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="auth-container">
+
+        <!-- Left Side -->
+        <div class="auth-info">
+
+            <div class="brand">
+
+                <div class="brand-logo">
+                    ✚
+                </div>
+
+                <div>
+                    <h1>MEDROUTER</h1>
+                    <p>Symptom Guidance Platform</p>
+                </div>
+
+            </div>
+
+
+            <div class="welcome-content">
+
+                <span class="welcome-tag">
+                    GET STARTED
+                </span>
+
+                <h2>
+                    Create your
+                    <span>health profile.</span>
+                </h2>
+
+                <p>
+                    Create your account to continue to
+                    the MEDROUTER symptom guidance system.
+                </p>
+
+            </div>
+
+
+            <div class="info-points">
+
+                <div class="info-item">
+
+                    <span>✓</span>
+
+                    <p>
+                        Secure account access
+                    </p>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <span>✓</span>
+
+                    <p>
+                        Personalized user experience
+                    </p>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <span>✓</span>
+
+                    <p>
+                        Simple symptom guidance
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Right Side -->
+        <div class="auth-form">
+
+            <div class="form-header">
+
+                <h2>
+                    Create Account
+                </h2>
+
+                <p>
+                    Join MEDROUTER to get started
+                </p>
+
+            </div>
+            {% if error %}
+            <div class="error-message">
+              ⚠️ {{ error }}
+               </div>
+             {% endif %}
+
+            <!-- Registration Form -->
+            <form action="/register" method="POST">
+
+                <label>
+                    Full Name
+                </label>
+
+                <div class="input-box">
+
+                    <span>👤</span>
+
+                    <input
+                        type="text"
+                        name="full_name"
+                        placeholder="Enter your full name"
+                        required>
+
+                </div>
+
+
+                <label>
+                    Email Address
+                </label>
+
+                <div class="input-box">
+
+                    <span>✉</span>
+
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        required>
+
+                </div>
+
+
+                <label>
+                    Password
+                </label>
+
+                <div class="input-box">
+
+                    <span>🔒</span>
+
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Create a password"
+                        required>
+
+                </div>
+
+
+                <label>
+                    Confirm Password
+                </label>
+
+                <div class="input-box">
+
+                    <span>🔐</span>
+
+                    <input
+                        type="password"
+                        name="confirm_password"
+                        placeholder="Confirm your password"
+                        required>
+
+                </div>
+
+
+                <button type="submit">
+                    Create Account →
+                </button>
+
+            </form>
+
+
+            <!-- Login Link -->
+            <div class="register-link">
+
+                <p>
+
+                    Already have an account?
+
+                    <a href="/">
+                        Login
+                    </a>
+
+                </p>
+
+            </div>
+
+
+            <!-- Note -->
+            <div class="auth-note">
+
+                <span>
+                    ⓘ
+                </span>
+
+                <p>
+                    Your account is used to access the
+                    MEDROUTER application.
+                </p>
+
+            </div>
+
+
+            <!-- Footer -->
+            <div class="footer">
+
+                MEDROUTER • By- SUDHANSHU KUMAR GUPTA
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
