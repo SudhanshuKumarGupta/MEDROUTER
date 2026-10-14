@@ -695,10 +695,10 @@ def admin():
     # Total number of checks
     total_checks = conn.execute(
         """
-        SELECT COUNT(*) 
+        SELECT COUNT(*) AS total
         FROM check_history
         """
-    ).fetchone()[0]
+    ).fetchone()["total"]
 
     # Count checks for each specialist
     specialist_counts = conn.execute(
