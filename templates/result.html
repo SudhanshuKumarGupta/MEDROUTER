@@ -10,6 +10,9 @@
 <body>
 <div class="result-page">
     <div class="result-card">
+        <a href="{{ url_for('logout') }}" class="result-logout">
+         Logout
+        </a>
         <!-- BRAND -->
         <div class="result-brand">
             <div class="brand-icon">
@@ -268,9 +271,6 @@
         <div class="result-actions">
       <a href="/symptoms" class="back-button">
         ← Check Symptoms Again
-      </a>
-      <a href="{{ url_for('logout') }}" class="back-button">
-        Logout
       </a>
      </div>
     </div>

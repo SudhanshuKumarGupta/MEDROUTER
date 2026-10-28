@@ -1895,11 +1895,9 @@ body:has(.result-page) {
         min-width: 45px;
         font-size: 19px;
     }
-
     .multiple-result-header h2 {
         font-size: 18px;
     }
-
     .category-explanation-row {
         align-items: flex-start;
         flex-direction: column;
@@ -1962,6 +1960,25 @@ body:has(.result-page) {
     text-decoration: none;
     border-radius: 8px;
     font-weight: 600;
+}
+.result-logout:hover {
+    background: #007681;
+}
+.result-card {
+    position: relative;
+}
+.result-logout {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    padding: 8px 16px;
+    background: #008f9c;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    z-index: 10;
 }
 .result-logout:hover {
     background: #007681;
