@@ -443,7 +443,7 @@ button:hover,
     background: #f9fcfd;
 }
 
-.input-box > span {
+.input-box>span {
     color: var(--p);
 }
 
@@ -592,10 +592,10 @@ body:has(.result-page) {
     width: 100%;
     max-width: 900px;
     padding: 42px;
-    background: rgba(255,255,255,0.97);
+    background: rgba(255, 255, 255, 0.97);
     border: 1px solid #d9eaee;
     border-radius: 28px;
-    box-shadow: 0 25px 65px rgba(0,70,100,0.12);
+    box-shadow: 0 25px 65px rgba(0, 70, 100, 0.12);
 }
 
 
@@ -621,7 +621,7 @@ body:has(.result-page) {
     color: white;
     font-size: 23px;
     font-weight: bold;
-    box-shadow: 0 8px 20px rgba(8,126,164,0.22);
+    box-shadow: 0 8px 20px rgba(8, 126, 164, 0.22);
 }
 
 .result-brand strong {
@@ -684,7 +684,7 @@ body:has(.result-page) {
     border-radius: 20px;
     background:
         linear-gradient(135deg, #f7fdff 0%, #edfafd 100%);
-    box-shadow: 0 12px 30px rgba(0,100,130,0.09);
+    box-shadow: 0 12px 30px rgba(0, 100, 130, 0.09);
 }
 
 .single-result-card::before {
@@ -714,7 +714,7 @@ body:has(.result-page) {
     background: linear-gradient(135deg, #087ea4, #08a99c);
     color: white;
     font-size: 29px;
-    box-shadow: 0 9px 22px rgba(8,126,164,0.25);
+    box-shadow: 0 9px 22px rgba(8, 126, 164, 0.25);
 }
 
 .specialist-result-content {
@@ -784,7 +784,7 @@ body:has(.result-page) {
     font-size: 12px;
 }
 
-.result-match-heading div > span {
+.result-match-heading div>span {
     display: block;
     margin-top: 2px;
     color: #81949c;
@@ -820,7 +820,7 @@ body:has(.result-page) {
     background: #f3fbfc;
     border: 1px solid #c9e5ea;
     border-radius: 20px;
-    box-shadow: 0 8px 24px rgba(0,100,130,0.06);
+    box-shadow: 0 8px 24px rgba(0, 100, 130, 0.06);
 }
 
 .multiple-result-header {
@@ -1061,7 +1061,7 @@ body:has(.result-page) {
     color: #17323a;
 }
 
-.routing-match-section > p {
+.routing-match-section>p {
     margin: 0 0 13px;
     color: #667980;
     font-size: 12px;
@@ -1075,7 +1075,7 @@ body:has(.result-page) {
     gap: 9px;
 }
 
-.category-explanation-row > strong {
+.category-explanation-row>strong {
     font-size: 12px;
 }
 
@@ -1160,7 +1160,7 @@ body:has(.result-page) {
     font-size: 13px;
     font-weight: bold;
     transition: 0.2s;
-    box-shadow: 0 7px 18px rgba(8,126,164,0.18);
+    box-shadow: 0 7px 18px rgba(8, 126, 164, 0.18);
 }
 
 .back-button:hover {
@@ -1337,7 +1337,7 @@ body:has(.result-page) {
     font-size: 36px;
 }
 
-.dashboard-main-content > span {
+.dashboard-main-content>span {
     color: #0b8fac;
     font-size: 11px;
     font-weight: 700;
@@ -1572,7 +1572,7 @@ body:has(.result-page) {
     margin-bottom: 25px;
 }
 
-.admin-title > span {
+.admin-title>span {
     font-size: 12px;
     font-weight: 700;
     color: #087ea4;
@@ -1905,39 +1905,46 @@ body:has(.result-page) {
         flex-direction: column;
         gap: 5px;
     }
-
     .patient-info-grid {
         grid-template-columns: 1fr;
     }
-
-
     /* =====================================================
        DASHBOARD MOBILE
        ===================================================== */
-
     .dashboard-header {
         flex-direction: column;
         gap: 15px;
         align-items: flex-start;
     }
-
     .dashboard-user {
         width: 100%;
         justify-content: space-between;
     }
-
     .dashboard-welcome h2 {
         font-size: 24px;
     }
-
     .dashboard-main-card {
         flex-direction: column;
         align-items: flex-start;
     }
-
     .dashboard-main-icon {
         min-width: 60px;
         width: 60px;
         height: 60px;
     }
+}
+.result-logout {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    padding: 10px 22px;
+    background: #dc3545;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    z-index: 1000;
+}
+.result-logout:hover {
+    background: #b02a37;
 }
