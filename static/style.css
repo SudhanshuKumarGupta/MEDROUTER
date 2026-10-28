@@ -1948,3 +1948,21 @@ body:has(.result-page) {
 .result-logout:hover {
     background: #b02a37;
 }
+.result-page {
+    position: relative;
+}
+.result-logout {
+    position: fixed;
+    top: 20px;
+    right: 25px;
+    z-index: 9999;
+    padding: 10px 22px;
+    background: #008f9c;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+}
+.result-logout:hover {
+    background: #007681;
+}
